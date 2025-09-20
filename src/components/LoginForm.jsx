@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { auth } from '../firebase'
-import { signInWithEmailAndPassword } from 'firebase/auth'
+import { auth, googleProvider } from '../firebase'
+import { signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth'
 
 function LoginForm() {
   const [formData, setFormData] = useState({
@@ -40,7 +40,26 @@ function LoginForm() {
         />
       </div>
       {error && <div className="error-message">{error}</div>}
-      <button type="submit">Login</button>
+      <button type="submit" className="login-button">Login</button>
+      <div className="divider">
+        <span>or</span>
+      </div>
+      <button 
+        type="button" 
+        className="google-button"
+        onClick={async () => {
+          try {
+            const result = await signInWithPopup(auth, googleProvider);
+            console.log('Google sign in successful:', result.user);
+          } catch (err) {
+            setError(err.message);
+            console.error('Google sign in error:', err);
+          }
+        }}
+      >
+        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" />
+        Continue with Google
+      </button>
     </form>
   )
 }

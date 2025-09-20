@@ -3,6 +3,7 @@
   min-height: 100vh;
   margin: 0;
   padding: 0;
+  font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', sans-serif;
 }
 
 .container {
@@ -11,6 +12,22 @@
   align-items: center;
   min-height: 100vh;
   position: relative;
+}
+
+.form-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.form-header h1 {
+  color: #333;
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.form-header p {
+  color: #666;
+  font-size: 1rem;
 }
 
 .background-wrapper {
@@ -89,7 +106,8 @@ button[type="submit"] {
   transition: background 0.3s ease;
 }
 
-button[type="submit"]:hover {
+button[type="submit"]:hover,
+.login-button:hover {
   background: #764ba2;
 }
 
@@ -100,4 +118,50 @@ button[type="submit"]:hover {
   border-radius: 4px;
   margin-bottom: 1rem;
   font-size: 0.9rem;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 1.5rem 0;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid #ddd;
+}
+
+.divider span {
+  padding: 0 10px;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.google-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 0.75rem;
+  background: white;
+  color: #333;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  gap: 10px;
+}
+
+.google-button:hover {
+  background: #f8f8f8;
+  border-color: #aaa;
+}
+
+.google-button img {
+  width: 18px;
+  height: 18px;
 }
