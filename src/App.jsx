@@ -2,12 +2,16 @@ import { useState } from 'react'
 import './App.css'
 import LoginForm from './components/LoginForm'
 import SignupForm from './components/SignupForm'
+import Silk from './components/Silk'
 
 function App() {
   const [isLogin, setIsLogin] = useState(true)
 
   return (
     <div className="container">
+      <div className="background-wrapper">
+        <Silk color="#667eea" speed={3} scale={1.5} noiseIntensity={1.2} rotation={0.2} />
+      </div>
       <div className="form-container">
         <div className="form-tabs">
           <button 
