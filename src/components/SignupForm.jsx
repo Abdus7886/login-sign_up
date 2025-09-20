@@ -33,7 +33,7 @@ function SignupForm() {
         createdAt: new Date().toISOString()
       })
 
-      console.log('Signed up successfully:', userCredential.user)
+      // Auth state listener in App.jsx will handle the redirect
     } catch (err) {
       setError(err.message)
       console.error('Signup error:', err)

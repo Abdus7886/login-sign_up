@@ -13,8 +13,8 @@ function LoginForm() {
     e.preventDefault()
     setError('')
     try {
-      const userCredential = await signInWithEmailAndPassword(auth, formData.email, formData.password)
-      console.log('Logged in successfully:', userCredential.user)
+      await signInWithEmailAndPassword(auth, formData.email, formData.password)
+      // Auth state listener in App.jsx will handle the redirect
     } catch (err) {
       setError(err.message)
       console.error('Login error:', err)
@@ -49,11 +49,22 @@ function LoginForm() {
         className="google-button"
         onClick={async () => {
           try {
+            setError(''); // Clear any existing errors
+            console.log('Attempting Google sign in...');
             const result = await signInWithPopup(auth, googleProvider);
             console.log('Google sign in successful:', result.user);
+            // You can add a success message or redirect here
+            alert('Successfully signed in with Google!');
           } catch (err) {
-            setError(err.message);
             console.error('Google sign in error:', err);
+            // More user-friendly error messages
+            if (err.code === 'auth/popup-blocked') {
+              setError('Please allow popups for Google sign-in to work');
+            } else if (err.code === 'auth/cancelled-popup-request') {
+              setError('Sign-in was cancelled');
+            } else {
+              setError(err.message);
+            }
           }
         }}
       >
