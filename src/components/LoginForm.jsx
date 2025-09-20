@@ -1,14 +1,24 @@
 import { useState } from 'react'
+import { auth } from '../firebase'
+import { signInWithEmailAndPassword } from 'firebase/auth'
 
 function LoginForm() {
   const [formData, setFormData] = useState({
     email: '',
     password: ''
   })
+  const [error, setError] = useState('')
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    console.log('Login:', formData)
+    setError('')
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, formData.email, formData.password)
+      console.log('Logged in successfully:', userCredential.user)
+    } catch (err) {
+      setError(err.message)
+      console.error('Login error:', err)
+    }
   }
 
   return (
@@ -29,6 +39,7 @@ function LoginForm() {
           onChange={(e) => setFormData({...formData, password: e.target.value})}
         />
       </div>
+      {error && <div className="error-message">{error}</div>}
       <button type="submit">Login</button>
     </form>
   )

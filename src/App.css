@@ -92,3 +92,12 @@ button[type="submit"] {
 button[type="submit"]:hover {
   background: #764ba2;
 }
+
+.error-message {
+  color: #d32f2f;
+  background: rgba(211, 47, 47, 0.1);
+  padding: 0.5rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}

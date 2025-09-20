@@ -1,5 +1,8 @@
 // filepath: c:\Users\Nitro\Desktop\Full Stack Development\React_JS\React_Vite\Vite_React_App\src\components\SignupForm.jsx
 import { useState } from 'react'
+import { auth, db } from '../firebase'
+import { createUserWithEmailAndPassword } from 'firebase/auth'
+import { doc, setDoc } from 'firebase/firestore'
 
 function SignupForm() {
   const [formData, setFormData] = useState({
@@ -8,10 +11,33 @@ function SignupForm() {
     password: '',
     confirmPassword: ''
   })
+  const [error, setError] = useState('')
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    console.log('Signup:', formData)
+    setError('')
+
+    if (formData.password !== formData.confirmPassword) {
+      setError('Passwords do not match')
+      return
+    }
+
+    try {
+      // Create user with email and password
+      const userCredential = await createUserWithEmailAndPassword(auth, formData.email, formData.password)
+      
+      // Store additional user data in Firestore
+      await setDoc(doc(db, 'users', userCredential.user.uid), {
+        name: formData.name,
+        email: formData.email,
+        createdAt: new Date().toISOString()
+      })
+
+      console.log('Signed up successfully:', userCredential.user)
+    } catch (err) {
+      setError(err.message)
+      console.error('Signup error:', err)
+    }
   }
 
   return (
@@ -48,6 +74,7 @@ function SignupForm() {
           onChange={(e) => setFormData({...formData, confirmPassword: e.target.value})}
         />
       </div>
+      {error && <div className="error-message">{error}</div>}
       <button type="submit">Sign Up</button>
     </form>
   )
